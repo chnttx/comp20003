@@ -5,7 +5,7 @@ CFLAGS = -Wall -gcc
 # Define libraries to be linked
 LDLIBS = 
 
-SRC = 
+SRC = driver.c lists.c data.c
 
 OBJ = $(SRC:.c=.o)
 
