@@ -9,6 +9,9 @@ list_t *listCreate();
 
 void listFree();
 
-void listAppend();
+void listAppend(list_t *, restaurant_t);
+
+int findRestaurant(list_t *, char *);
+
 
 #endif

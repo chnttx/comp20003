@@ -47,7 +47,15 @@ char *getName(restaurant_t restaurant) {
 
 int findRestaurant(list_t *list, char *name) {
     node_t *curr = list->head;
+    char *word;
+    int count = 0;
+
     while (curr) {
-        
+        word = getName(curr->data);
+        if (!strcmp(word, name)) {
+            count++;
+        } curr = curr->next;
     }
+
+    return count;
 }
