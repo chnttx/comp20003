@@ -1,5 +1,6 @@
 #ifndef _DATA_H_
 #define _DATA_H_
+#include <stdio.h>
 // Defining constants
 
 // Data definitions
@@ -8,7 +9,10 @@ struct restaurant {
     double longitude, latitude;
     char *bld_add, *clue_small_area, *business_add, *trading_name, *description, *seating;
 };
+
 typedef struct restaurant restaurant_t;
+
+void skipHeader(FILE *f);
 
 char *getName(restaurant_t *);
 

@@ -12,7 +12,7 @@ void printCount(char* name, list_t *lst) {
     printf("%s --> %d\n", name, findRestaurant(lst, name));
 }
 
-void skipHeaderLine(FILE *f) {
+void skipHeader(FILE *f) {
     while (fgetc(f) != '\n');
 }
 

@@ -9,8 +9,10 @@ list_t *buildRestaurantList(char *);
 
 int main(int argc, char **argv) {
 
-    FILE *infoFile = fopen(argv[2], "w");
+    FILE *infoFile = fopen(argv[3], "w");
     assert(infoFile);
+
+    listQuerying(argv[2], stdin, stdout, infoFile);
 
     fclose(infoFile);
 
@@ -25,9 +27,11 @@ list_t *buildRestaurantList(char* filename) {
     list_t *restaurants = listCreate();
     skipHeader(f);
     restaurant_t *res;
+
     while ((res = getRestaurant(f))) {
         listAppend(restaurants, res);
     }
+
     fclose(f);
     return restaurants;
 }
