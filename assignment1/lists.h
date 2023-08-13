@@ -13,5 +13,6 @@ void listAppend(list_t *, restaurant_t);
 
 int findRestaurant(list_t *, char *);
 
+void printCount(char *, list_t *);
 
 #endif
