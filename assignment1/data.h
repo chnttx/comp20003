@@ -10,9 +10,10 @@ struct restaurant {
 };
 typedef struct restaurant restaurant_t;
 
-char *getName(restaurant_t);
+char *getName(restaurant_t *);
 
 void restaurantFree(restaurant_t);
 
 void printRestaurant(restaurant_t, char *);
+
 #endif

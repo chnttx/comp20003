@@ -7,7 +7,7 @@
 
 typedef struct node node_t;
 struct node {
-    restaurant_t data;
+    restaurant_t *data;
     node_t *next;
 };
 
@@ -26,7 +26,7 @@ list_t *listCreate() {
     return list;
 }
 
-void listAppend(list_t *list, restaurant_t newData) {
+void listAppend(list_t *list, restaurant_t *newData) {
     node_t *new = malloc(sizeof(*new));
     assert(new);
     new->data = newData;
@@ -41,9 +41,7 @@ void listAppend(list_t *list, restaurant_t newData) {
     } (list->n)++;
 }
 
-char *getName(restaurant_t restaurant) {
-    return restaurant.trading_name;
-}
+
 
 int findRestaurant(list_t *list, char *name) {
     node_t *curr = list->head;
