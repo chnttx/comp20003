@@ -1,17 +1,15 @@
 #ifndef _LISTS_H_
 #define _LISTS_H_
-#include "data.h"
+
 typedef struct list list_t;
-
-
 
 list_t *listCreate();
 
-void listFree();
+void freeList(list_t *);
 
-void listAppend(list_t *, restaurant_t *);
+void listAppend(list_t *, void *);
 
-int findRestaurant(list_t *, char *);
+int findRestaurant(list_t *, char *, FILE *);
 
 void printCount(char *, list_t *);
 

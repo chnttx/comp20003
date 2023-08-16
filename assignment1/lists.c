@@ -7,7 +7,7 @@
 
 typedef struct node node_t;
 struct node {
-    restaurant_t *data;
+    void *data;
     node_t *next;
 };
 
@@ -26,15 +26,13 @@ list_t *listCreate() {
     return list;
 }
 
-void listAppend(list_t *list, restaurant_t *newData) {
+void listAppend(list_t *list, void *newData) {
     node_t *new = malloc(sizeof(*new));
     assert(new);
     new->data = newData;
     new->next = NULL;
-
-    if (list->tail == NULL) {
-        list->head = new;
-        list->tail = new;
+    if (list->head == NULL) {
+        list->head = list->tail = new;
     } else {
         list->tail->next = new;
         list->tail = new;
@@ -43,7 +41,7 @@ void listAppend(list_t *list, restaurant_t *newData) {
 
 
 
-int findRestaurant(list_t *list, char *name) {
+int findRestaurant(list_t *list, char *name, FILE *outFile) {
     node_t *curr = list->head;
     char *word;
     int count = 0;
@@ -52,8 +50,20 @@ int findRestaurant(list_t *list, char *name) {
         word = getName(curr->data);
         if (!strcmp(word, name)) {
             count++;
+            printRestaurant(curr->data, outFile);
         } curr = curr->next;
     }
 
     return count;
+}
+
+void freeList(list_t *list) {
+    assert(list != NULL);
+    node_t *curr = list->head;
+    while (curr) {
+        node_t *tmp = curr;
+        curr = curr->next;
+        restaurantFree(tmp->data);
+        free(tmp);
+    } free(list);
 }
