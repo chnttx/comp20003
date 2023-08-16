@@ -1,6 +1,6 @@
 # Define C compiler and flags
 CC = gcc
-CFLAGS = -Wall -gcc
+CFLAGS = -Wall -g
 
 # Define libraries to be linked
 LDLIBS = 
