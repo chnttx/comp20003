@@ -1,7 +1,5 @@
 #ifndef _DATA_H_
 #define _DATA_H_
-#include <stdio.h>
-// Defining constants
 
 #define MAX_FIELD_LEN 128
 #define CENSUS_YEAR 1
@@ -18,13 +16,6 @@
 #define SEAT_NUMBERS 12
 #define LONGITUDE 13
 #define LATITUDE 14
-
-// Data definitions
-struct restaurant {
-    int census_year, block_id, property_id, base_property_id, industry_code, num_seats;
-    double longitude, latitude;
-    char *bld_add, *clue_small_area, *business_add, *trading_name, *description, *seating;
-};
 
 typedef struct restaurant restaurant_t;
 

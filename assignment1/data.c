@@ -5,6 +5,12 @@
 #include "data.h"
 #include "lists.h"
 
+struct restaurant {
+    int census_year, block_id, property_id, base_property_id, industry_code, num_seats;
+    double longitude, latitude;
+    char *bld_add, *clue_small_area, *business_add, *trading_name, *description, *seating;
+};
+
 char *getName(void *res) {
     return ((restaurant_t *)res)->trading_name;
 }
@@ -16,31 +22,31 @@ void skipHeader(FILE *f) {
 restaurant_t *readRestaurant(FILE *f) {
     restaurant_t *res = NULL;
     char *line = NULL;
-    size_t read, len;
+    size_t len;
 
-    if ((read = getline(&line, &len, f)) != -1) {
+    if (getline(&line, &len, f) != -1) {
         res = malloc(sizeof(*res));
         assert(res);
-        int count = 1, buf = 0, idx = 0;
+        int count = 1, buf = 0, fieldIdx = 0;
         char field[MAX_FIELD_LEN + 1];
-        for (int i = 0; i < read - 1; i++) {
+        for (int i = 0; line[i] != '\0'; i++) {
             if (line[i] == '"') {
                 if (line[i + 1] == ',') {
-                    field[idx] = '\0';
+                    field[fieldIdx] = '\0';
                     assignRole(res, field, &count);
                     buf = 0;
-                    idx = 0;
-                    field[idx] = '\0';
+                    fieldIdx = 0;
+                    field[fieldIdx] = '\0';
                 } else if (line[i - 1] == ',') {
                     buf = 1;
                 }
             } else if (line[i] == ',' && !buf) {
-                field[idx] = '\0';
+                field[fieldIdx] = '\0';
                 if (field[0] != '\0') {
                     assignRole(res, field, &count);
-                } idx = 0;
+                } fieldIdx = 0;
             } else {
-                field[idx++] = line[i];
+                field[fieldIdx++] = line[i];
             }
         } assignRole(res, field, &count);
     } free(line);
