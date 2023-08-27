@@ -17,7 +17,9 @@
 #define LONGITUDE 13
 #define LATITUDE 14
 
+
 typedef struct restaurant restaurant_t;
+
 
 void skipHeader(FILE *f);
 
