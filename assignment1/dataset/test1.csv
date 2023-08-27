@@ -1,0 +1,2 @@
+census_year,block_id,property_id,base_property_id,building_address,clue_small_area,business_address,trading_name,industry_code,industry_description,seating_type,number_of_seats,longitude,latitude
+2021,14,103165,103165,1-5 Elizabeth Street MELBOURNE VIC 3000,Melbourne (CBD),"Unit 3, Ground 1 Elizabeth Street MELBOURNE VIC 3000",Subway,4512,Takeaway Food Services,Seats - Indoor,12,144.96461,-37.81806
