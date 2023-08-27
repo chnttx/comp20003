@@ -28,7 +28,7 @@ list_t *buildRestaurantList(char *filename) {
     return restaurants;
 }
 
-// this code was adapted from ws3.8
+
 void listQuerying(char *dataFilename, FILE *outFile, FILE *queryfile) {
 
     list_t *restaurants = buildRestaurantList(dataFilename);

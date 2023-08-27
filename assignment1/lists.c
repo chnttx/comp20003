@@ -7,7 +7,7 @@
 
 typedef struct node node_t;
 struct node {
-    void *data;
+    restaurant_t *data;
     node_t *next;
 };
 
