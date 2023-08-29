@@ -17,9 +17,7 @@
 #define LONGITUDE 13
 #define LATITUDE 14
 
-
 typedef struct restaurant restaurant_t;
-
 
 void skipHeader(FILE *f);
 
@@ -31,7 +29,9 @@ void restaurantFree(void *);
 
 void printRestaurant(restaurant_t *, FILE *);
 
-void printRes(restaurant_t *);
+void printRes(void *);
 
 void assignRole(restaurant_t *, char *, int *);
+
+int stringcmp(char *s1, char *s2);
 #endif

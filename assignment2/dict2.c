@@ -33,15 +33,23 @@ array_t *buildArray(char *filename) {
 void arrayQuerying(char *dataFilename, FILE *outFile, FILE *queryfile) {
 
     array_t *restaurants = buildArray(dataFilename);
-    int bytes = 0, ch = 0, str = 0;
+    // printArray(restaurants);
+    // printf("\n");
+    int arrSize = getSize(restaurants);
     char *query = NULL;
     size_t bufferSize = 0, read;
 
     while ((read = getline(&query, &bufferSize, queryfile)) != -1) {
-        query[read - 1] = '\0';
-        fprintf(outFile, "%s\n", query);
-        printf("%s --> ", query);
-        if (1) printf("%db %dc %ds\n", bytes, ch, str);
-        else printf("NOTFOUND\n");
+        if (query[read - 1] == '\n') {
+            query[read - 1] = '\0';
+        }
+        int bits = 0, ch = 0, str = 0;
+        // fprintf(outFile, "%s\n", query);
+        binarySearch(restaurants, arrSize, query, outFile, &bits, &ch, &str);
+        printf("%s --> b%d c%d s%d\n", query, bits, ch, str);
+        // if (1) printf("%db %dc %ds\n", bytes, ch, str);
+        // else printf("NOTFOUND\n");
     }
+    arrayFree(restaurants);
+    free(query);
 }

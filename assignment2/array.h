@@ -8,6 +8,8 @@ typedef struct array array_t;
 
 array_t *arrayCreate();
 
+int getSize(array_t *);
+
 void arrayFree(array_t *);
 
 void arrayShrink(array_t *);
@@ -16,6 +18,7 @@ void arrayEnableInsert(array_t *);
 
 void insertSortedArray(array_t *, restaurant_t *);
 
-restaurant_t *binarySearch(array_t *arr, char *);
+void binarySearch(array_t *, int, char *, FILE *, int *, int *, int *);
 
+void printArray(array_t *);
 #endif

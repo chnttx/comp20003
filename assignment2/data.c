@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <string.h>
 #include "data.h"
-#include "lists.h"
+#include "array.h"
 
 struct restaurant {
     int census_year, block_id, property_id, base_property_id, industry_code, num_seats;
@@ -49,7 +49,8 @@ restaurant_t *readRestaurant(FILE *f) {
                 field[fieldIdx++] = line[i];
             }
         } assignRole(res, field, &count);
-    } free(line);
+    }
+    free(line);
     return res;
 }
 
@@ -148,19 +149,25 @@ void restaurantFree(void *res) {
     free(res);
 }
 
-void printRes(restaurant_t *res) {
-    printf("%d\n", res->census_year);
-    printf("%d\n", res->block_id);
-    printf("%d\n", res->property_id);
-    printf("%d\n", res->base_property_id);
-    printf("%s\n", res->bld_add);
-    printf("%s\n", res->clue_small_area);
-    printf("%s\n", res->business_add);
-    printf("%s\n", res->trading_name);
-    printf("%d\n", res->industry_code);
-    printf("%s\n", res->description);
-    printf("%s\n", res->seating);
-    printf("%d\n", res->num_seats);
-    printf("%lf\n", res->longitude);
-    printf("%lf\n", res->latitude);
+void printRes(void *res) {
+    printf("%d\n", ((restaurant_t *)res)->census_year);
+    printf("%d\n", ((restaurant_t *)res)->block_id);
+    printf("%d\n", ((restaurant_t *)res)->property_id);
+    printf("%d\n", ((restaurant_t *)res)->base_property_id);
+    printf("%s\n", ((restaurant_t *)res)->bld_add);
+    printf("%s\n", ((restaurant_t *)res)->clue_small_area);
+    printf("%s\n", ((restaurant_t *)res)->business_add);
+    printf("%s\n", ((restaurant_t *)res)->trading_name);
+    printf("%d\n", ((restaurant_t *)res)->industry_code);
+    printf("%s\n", ((restaurant_t *)res)->description);
+    printf("%s\n", ((restaurant_t *)res)->seating);
+    printf("%d\n", ((restaurant_t *)res)->num_seats);
+    printf("%lf\n", ((restaurant_t *)res)->longitude);
+    printf("%lf\n\n", ((restaurant_t *)res)->latitude);
+}
+
+int stringcmp(char *s1, char *s2) {
+    int i;
+    for (i = 0; s1[i] && s2[i] && s1[i] == s2[i]; i++);
+    return i + 1;
 }
