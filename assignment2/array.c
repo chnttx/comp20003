@@ -52,7 +52,7 @@ void arrayShrink(array_t *arr) {
 void insertSortedArray(array_t *arr, restaurant_t *res) {
     int i;
     arrayEnableInsert(arr);
-    for (i = arr->currCount - 1; i >= 0 && strcmp(getName(arr->A[i]), getName(res)) >= 0; i--) {
+    for (i = arr->currCount - 1; i >= 0 && strcmp(getName(arr->A[i]), getName(res)) > 0; i--) {
         arr->A[i + 1] = arr->A[i];
     }
     arr->A[i + 1] = res;
@@ -71,7 +71,7 @@ void search(array_t *arr, int size, char *key, FILE *outFile, compareBCS cmp) {
         outcome = stringcmp(currName, key, cmp);
         
         if (!outcome) {
-            printRestaurant(restaurants[mid], outFile);
+            // printRestaurant(restaurants[mid], outFile);
             break;
         } else if (outcome < 0) {
             lo = mid + 1;
@@ -79,13 +79,17 @@ void search(array_t *arr, int size, char *key, FILE *outFile, compareBCS cmp) {
             hi = mid - 1;
         }
     }
-
+    int i, j;
     // linear search in the surrounding indices
-    for (int i = mid - 1; i >= 0; i--) {
+    for (i = mid - 1; i >= 0; i--) {
         if (stringcmp(getName(restaurants[i]), key, cmp)) break;
-        printRestaurant(restaurants[i], outFile);
-    } for (int j = mid + 1; j < arr->currCount; j++) {
+        // printRestaurant(restaurants[i], outFile);
+    } for (j = mid + 1; j < arr->currCount; j++) {
         if (stringcmp(getName(restaurants[j]), key, cmp)) break;
-        printRestaurant(restaurants[j], outFile);
+        // printRestaurant(restaurants[j], outFile);
+    }
+    
+    for (int k = i + 1; k < j; k++) {
+        printRestaurant(restaurants[k], outFile);
     }
 }
