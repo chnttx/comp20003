@@ -9,7 +9,7 @@ struct restaurant {
     int census_year, block_id, property_id, base_property_id, industry_code, num_seats;
     double longitude, latitude;
     char *bld_add, *clue_small_area, *business_add, *trading_name, *description, *seating;
-};
+}; 
 
 char *getName(void *res) {
     return ((restaurant_t *)res)->trading_name;
@@ -135,8 +135,8 @@ void printRestaurant(restaurant_t *res, FILE *outFile) {
     fprintf(outFile, " industry_description: %s ||", res->description);
     fprintf(outFile, " seating_type: %s ||", res->seating);
     fprintf(outFile, " number_of_seats: %d ||", res->num_seats);
-    fprintf(outFile, " longtitude: %.5lf ||", res->longitude);
-    fprintf(outFile, " latitude: %.5lf ||\n", res->latitude);
+    fprintf(outFile, " longitude: %.5lf ||", res->longitude);
+    fprintf(outFile, " latitude: %.5lf || \n", res->latitude);
 }
 
 void restaurantFree(void *res) {
@@ -166,8 +166,23 @@ void printRes(void *res) {
     printf("%lf\n\n", ((restaurant_t *)res)->latitude);
 }
 
-int stringcmp(char *s1, char *s2) {
+int stringcmp(char *s1, char *s2, compareBCS cmp) {
     int i;
-    for (i = 0; s1[i] && s2[i] && s1[i] == s2[i]; i++);
-    return i + 1;
+    cmp[0]++;
+    for (i = 0; i < strlen(s1) && i < strlen(s2); i++) {
+        cmp[1]++;
+        cmp[2] += CHAR_BITS;
+        if (s1[i] < s2[i]) {
+            return -1;
+        } else if (s1[i] > s2[i]) {
+            return 1;
+        }
+    }
+    cmp[1]++;
+    cmp[2] += CHAR_BITS;
+    if (strlen(s1) == strlen(s2)) return 0;
+    else if (strlen(s1) < strlen(s2)) return -1;
+    else return 1;
+    // return 0;
 }
+

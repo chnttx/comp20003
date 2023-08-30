@@ -18,7 +18,7 @@ void arrayEnableInsert(array_t *);
 
 void insertSortedArray(array_t *, restaurant_t *);
 
-void binarySearch(array_t *, int, char *, FILE *, int *, int *, int *);
+void search(array_t *, int, char *, FILE *, compareBCS);
 
 void printArray(array_t *);
 #endif

@@ -52,67 +52,40 @@ void arrayShrink(array_t *arr) {
 void insertSortedArray(array_t *arr, restaurant_t *res) {
     int i;
     arrayEnableInsert(arr);
-    for (i = arr->currCount - 1; i >= 0 && strcmp(getName(arr->A[i]), getName(res)) > -1; i--) {
+    for (i = arr->currCount - 1; i >= 0 && strcmp(getName(arr->A[i]), getName(res)) >= 0; i--) {
         arr->A[i + 1] = arr->A[i];
     }
     arr->A[i + 1] = res;
     (arr->currCount)++;
 }
 
-void binarySearch(array_t *arr, int size, char *key, FILE *outFile, int *bits, int *ch, int *s) {
-    restaurant_t **a = arr->A;
-    int mid, outcome, lo = 0, hi = arr->currCount - 1, comps = 0, n;
-    char *curr = NULL;
+void search(array_t *arr, int size, char *key, FILE *outFile, compareBCS cmp) {
+    restaurant_t **restaurants = arr->A;
+    int mid, outcome, lo = 0, hi = arr->currCount - 1;
+    char *currName = NULL;
+    
+    // binary search
     while (lo <= hi) {
         mid = lo + (hi - lo) / 2;
-        curr = getName(a[mid]);
-        outcome = strncmp(curr, key, strlen(key));
-
-        if (outcome < 0) {
+        currName = getName(restaurants[mid]);
+        outcome = stringcmp(currName, key, cmp);
+        
+        if (!outcome) {
+            printRestaurant(restaurants[mid], outFile);
+            break;
+        } else if (outcome < 0) {
             lo = mid + 1;
-        } else if (outcome > 0){
-            hi = mid - 1;
         } else {
-            comps++;
-            (*s)++;
-            n = stringcmp(curr, key);
-            (*ch) += n;
-            (*bits) += 8 * n;
-            break;
-        }
-        comps++;
-        (*s)++;
-        n = stringcmp(curr, key);
-        // printf("%d\n", n);
-        (*ch) += n;
-        (*bits) += 8 * n; 
-    } 
-    // printf("%d %d %d %d comps\n", *bits, *ch, *s, comps);
-    // printf("mid = %d\n", mid);
-    for (int i = mid - 1; i >= 0; i--) {
-        (*s)++;
-        n = stringcmp(getName(a[i]), key);
-        (*ch) += n;
-        (*bits) += 8 * n;
-        if (strncmp(key, getName(a[i]), strlen(key))) {
-            break;
+            hi = mid - 1;
         }
     }
-    for (int j = mid + 1; j < arr->currCount; j++){
-        (*s)++;
-        n = stringcmp(getName(a[j]), key);
-        (*ch) += n;
-        (*bits) += 8 * n;
-        if (strncmp(key, getName(a[j]), strlen(key))) {
-            break;
-        }
-    }
-}
 
-void printArray(array_t *arr) {
-    restaurant_t **a = arr->A;
-    
-    for (int i = 0 ; i < arr->currCount; i++) {
-        printf("%d %s %ld\n", i, getName(a[i]), strlen(getName(a[i])) + 1);
+    // linear search in the surrounding indices
+    for (int i = mid - 1; i >= 0; i--) {
+        if (stringcmp(getName(restaurants[i]), key, cmp)) break;
+        printRestaurant(restaurants[i], outFile);
+    } for (int j = mid + 1; j < arr->currCount; j++) {
+        if (stringcmp(getName(restaurants[j]), key, cmp)) break;
+        printRestaurant(restaurants[j], outFile);
     }
 }

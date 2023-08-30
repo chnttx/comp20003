@@ -1,6 +1,7 @@
 #ifndef _DATA_H_
 #define _DATA_H_
 
+// define restaurant_t fields
 #define MAX_FIELD_LEN 128
 #define CENSUS_YEAR 1
 #define BLOCK_ID 2
@@ -17,7 +18,15 @@
 #define LONGITUDE 13
 #define LATITUDE 14
 
+// define compareBCS fields
+#define STRINGS 0
+#define CHARS 1
+#define BITS 2
+#define CHAR_BITS 8
+
 typedef struct restaurant restaurant_t;
+
+typedef int compareBCS[3];
 
 void skipHeader(FILE *f);
 
@@ -33,5 +42,5 @@ void printRes(void *);
 
 void assignRole(restaurant_t *, char *, int *);
 
-int stringcmp(char *s1, char *s2);
+int stringcmp(char *s1, char *s2, compareBCS);
 #endif
