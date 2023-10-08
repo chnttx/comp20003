@@ -1,15 +1,10 @@
-CC = gcc
-CFLAGS = -Wall -g 
+all: dict2 dict3
 
-LDLIBS = 
+dict2: dict2.c data.c array.c
+	gcc -Wall -g -o dict2 dict2.c data.c array.c
 
-SRC = dict2.c data.c array.c
-OBJ = $(SRC:.c=.o)
-
-EXE = dict2
-
-$(EXE): $(OBJ) 
-	$(CC) $(CFLAGS) -o $(EXE) $(OBJ) $(LDLIBS)
+dict3: dict3.c data.c array.c tree.c 
+	gcc -Wall -g -o dict3 dict3.c data.c array.c tree.c
 
 clean:
-	rm -f $(OBJ) $(EXE)
+	rm -f dict2 dict3

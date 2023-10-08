@@ -1,5 +1,5 @@
-#ifndef _ARRAY_H_
-#define _ARRAY_H_
+#ifndef ARRAY_H
+#define ARRAY_H
 #include "data.h"
 
 #define INIT_SIZE 2
@@ -20,5 +20,5 @@ void insertSortedArray(array_t *, restaurant_t *);
 
 void search(array_t *, int, char *, FILE *, compareBCS);
 
-void printArray(array_t *);
+void printArray(array_t *, FILE *);
 #endif

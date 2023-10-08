@@ -5,13 +5,14 @@
 
 #include "array.h"
 #include "data.h"
-
+// typedef struct array array_t;
 struct array {
     restaurant_t **A;
     int size, currCount;
 };
 
 int getSize(array_t *arr) {
+    // assert(arr);
     return arr->currCount;
 }
 
@@ -31,7 +32,9 @@ void arrayFree(array_t *arr) {
         restaurantFree(arr->A[i]);
     }
     free(arr->A);
+    arr->A = NULL;
     free(arr);
+    arr = NULL;
 }
 
 void arrayEnableInsert(array_t *arr){
@@ -61,7 +64,7 @@ void insertSortedArray(array_t *arr, restaurant_t *res) {
 
 void search(array_t *arr, int size, char *key, FILE *outFile, compareBCS cmp) {
     restaurant_t **restaurants = arr->A;
-    int mid, outcome, lo = 0, hi = arr->currCount - 1;
+    int mid, outcome, lo = 0, hi = arr->currCount - 1, start, end;
     char *currName = NULL;
     
     // binary search
@@ -71,7 +74,6 @@ void search(array_t *arr, int size, char *key, FILE *outFile, compareBCS cmp) {
         outcome = stringcmp(currName, key, cmp);
         
         if (!outcome) {
-            // printRestaurant(restaurants[mid], outFile);
             break;
         } else if (outcome < 0) {
             lo = mid + 1;
@@ -79,17 +81,25 @@ void search(array_t *arr, int size, char *key, FILE *outFile, compareBCS cmp) {
             hi = mid - 1;
         }
     }
-    int i, j;
-    // linear search in the surrounding indices
-    for (i = mid - 1; i >= 0; i--) {
-        if (stringcmp(getName(restaurants[i]), key, cmp)) break;
-        // printRestaurant(restaurants[i], outFile);
-    } for (j = mid + 1; j < arr->currCount; j++) {
-        if (stringcmp(getName(restaurants[j]), key, cmp)) break;
-        // printRestaurant(restaurants[j], outFile);
+    for (start = mid - 1; start >= 0; start--) {
+        if (stringcmp(getName(restaurants[start]), key, cmp)) break;
+    } for (end = mid + 1; end < arr->currCount; end++) {
+        if (stringcmp(getName(restaurants[end]), key, cmp)) break;
     }
     
-    for (int k = i + 1; k < j; k++) {
+    for (int k = start + 1; k < end; k++) {
         printRestaurant(restaurants[k], outFile);
     }
+}
+
+void printArray(array_t *restaurants, FILE *outFile) {
+    for (int i = 0; i < restaurants->currCount; i++) printRestaurant(restaurants->A[i], outFile);
+}
+
+// void printArray(array_t *restaurants, FILE *outFile) {
+//     for (int i = 0; i < getSize(restaurants); i++) printRestaurant(restaurants->A[i], outFile);
+// }
+
+restaurant_t *getRestaurantAtIdx(array_t *arr, int x) {
+    return arr->A[x];
 }

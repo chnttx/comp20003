@@ -2,16 +2,23 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+// #include <time.h>
 #include "array.h"
 #include "data.h"
 
-void arrayQuerying(char *, FILE *, FILE*);
+void arrayQuerying(int *, char *, FILE *, FILE*, int *, int *);
 array_t *buildArray(char *);
 
 int main(int argc, char **argv){
+    // clock_t begin = clock();
     FILE *outFile = fopen(argv[3], "w");
-    arrayQuerying(argv[2], outFile, stdin);
+    int cmp = 0, total = 0, x = 0;
+    arrayQuerying(&x, argv[2], outFile, stdin, &cmp, &total);
     fclose(outFile);
+    printf("%lf\n", (double) cmp / total);
+    printf("%d\n", x);
+    // clock_t end = clock();
+    // printf("%lf\n", (double)(end - begin) / CLOCKS_PER_SEC);
     return 0;
 }
 
@@ -30,7 +37,7 @@ array_t *buildArray(char *filename) {
 }
 
 
-void arrayQuerying(char *dataFilename, FILE *outFile, FILE *queryfile) {
+void arrayQuerying(int *x1, char *dataFilename, FILE *outFile, FILE *queryfile, int *x, int *y) {
 
     array_t *restaurants = buildArray(dataFilename);
     int arrSize = getSize(restaurants);
@@ -46,6 +53,8 @@ void arrayQuerying(char *dataFilename, FILE *outFile, FILE *queryfile) {
         fprintf(outFile, "%s\n", query);
         search(restaurants, arrSize, query, outFile, currCmp);
         printf("%s --> b%d c%d s%d\n", query, currCmp[BITS], currCmp[CHARS], currCmp[STRINGS]);
+        *x += currCmp[STRINGS];
+        *y += 1;
     }
 
     arrayFree(restaurants);
